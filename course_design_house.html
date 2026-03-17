@@ -16,16 +16,39 @@
   @media (prefers-color-scheme: dark) {
     body { background: #1c1c1a; color: #e0dfd8; }
     .panel { background: #2a2a27; border-color: rgba(255,255,255,0.12); }
-
-    .legend-item { color: #a0a09a; }
+    .text-alt { background: #2a2a27; border-color: rgba(255,255,255,0.12); }
+    .text-alt summary { color: #c0bfb8; }
+    .text-alt dt { color: #e0dfd8; }
+    .text-alt dd { color: #a0a09a; }
   }
-
+ 
   h1 { font-size: 20px; font-weight: 500; text-align: center; margin-bottom: 0.25rem; color: inherit; }
   .subtitle { font-size: 13px; color: #888; text-align: center; margin-bottom: 1.5rem; }
-
+ 
   .scene { max-width: 680px; margin: 0 auto; }
   .house-wrap { position: relative; width: 100%; }
-
+ 
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: #1a1a18;
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+    z-index: 100;
+    text-decoration: none;
+  }
+  .skip-link:focus { left: 0; }
+ 
+  svg { display: block; }
+  .part { cursor: pointer; transition: filter 0.15s; }
+  .part:hover { filter: brightness(0.93); }
+  .part.selected { filter: brightness(0.87); }
+  .part:focus { outline: none; filter: brightness(0.87); }
+  .part:focus rect, .part:focus polygon { stroke: #fff; stroke-width: 2.5; }
+ 
   .panel {
     display: none;
     background: #fff;
@@ -39,125 +62,170 @@
   .panel-sub { font-size: 13px; color: #555; line-height: 1.6; }
   @media (prefers-color-scheme: dark) { .panel-sub { color: #aaa; } }
   .panel-wig {
-    font-size: 12px;
-    color: #888;
-    margin-top: 8px;
-    font-style: italic;
-    border-left: 2px solid rgba(0,0,0,0.12);
-    padding-left: 10px;
+    font-size: 12px; color: #888; margin-top: 8px; font-style: italic;
+    border-left: 2px solid rgba(0,0,0,0.12); padding-left: 10px;
   }
   @media (prefers-color-scheme: dark) { .panel-wig { border-color: rgba(255,255,255,0.12); } }
-
-
-  svg { display: block; }
-  .part { cursor: pointer; transition: filter 0.15s; }
-  .part:hover { filter: brightness(0.93); }
-  .part.selected { filter: brightness(0.87); }
-
-  .legend {
-    display: flex; flex-wrap: wrap; gap: 8px 16px;
-    justify-content: center; margin-top: 1rem;
+ 
+ 
+ 
+  .text-alt {
+    margin-top: 2rem; background: #fff;
+    border: 0.5px solid rgba(0,0,0,0.12);
+    border-radius: 12px; padding: 1rem 1.25rem; font-size: 13px;
   }
-  .legend-item {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 12px; color: #666; cursor: pointer;
+  .text-alt summary {
+    cursor: pointer; font-size: 13px; font-weight: 500;
+    color: #555; padding: 2px 0; user-select: none;
   }
-  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-
-  .note {
-    text-align: center; font-size: 11px; color: #aaa;
-    margin-top: 1.5rem;
+  .text-alt summary:focus { outline: 2px solid #3B6EB5; outline-offset: 2px; border-radius: 2px; }
+  .text-alt dl { margin-top: 0.75rem; }
+  .text-alt dt { font-weight: 500; font-size: 13px; color: #1a1a18; margin-top: 0.75rem; }
+  .text-alt dt:first-of-type { margin-top: 0; }
+  .text-alt dd { font-size: 13px; color: #555; line-height: 1.6; margin-left: 0; margin-top: 2px; }
+  .text-alt .wig-note {
+    font-size: 12px; color: #888; font-style: italic; margin-top: 4px;
+    border-left: 2px solid rgba(0,0,0,0.1); padding-left: 10px;
   }
+ 
+  .note { text-align: center; font-size: 11px; color: #aaa; margin-top: 1.5rem; }
 </style>
 </head>
 <body>
 <div class="scene">
+ 
+  <a href="#text-alternative" class="skip-link">Skip diagram — jump to text description</a>
+ 
   <h1>The Course Design House</h1>
-  <p class="subtitle">Backward Design after Wiggins &amp; McTighe · Click any element to learn more</p>
-
+  <p class="subtitle">Backward Design after Wiggins &amp; McTighe &middot; Click or press Enter on any element to learn more</p>
+ 
   <div class="house-wrap">
-  <svg width="100%" viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-    </marker>
-  </defs>
-
-  <!-- FOUNDATION -->
-  <g class="part" id="p-foundation" onclick="show('foundation')">
-    <rect x="70" y="340" width="500" height="58" rx="4" fill="#3B6EB5" stroke="#2A509E" stroke-width="0.5"/>
-    <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="500" fill="#B5D4F4" text-anchor="middle" x="320" y="362">Transformational Goal</text>
-    <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#85B7EB" text-anchor="middle" x="320" y="382">The "Why" — what enduring change do learners take away?</text>
-  </g>
-
-  <!-- FLOOR -->
-  <g class="part" id="p-floor" onclick="show('floor')">
-    <rect x="90" y="296" width="460" height="46" rx="4" fill="#1D9E75" stroke="#0F6E56" stroke-width="0.5"/>
-    <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="500" fill="#9FE1CB" text-anchor="middle" x="320" y="316">Learning Objectives</text>
-    <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#5DCAA5" text-anchor="middle" x="320" y="333">Measurable outcomes — what learners will know, do, or value</text>
-  </g>
-
-  <!-- LEFT WALL: Formative -->
-  <g class="part" id="p-formative" onclick="show('formative')">
-    <rect x="90" y="128" width="118" height="170" rx="4" fill="#BA7517" stroke="#854F0B" stroke-width="0.5"/>
-    <g transform="translate(149,213) rotate(-90)">
-      <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="500" fill="#FAC775" text-anchor="middle" dominant-baseline="central" x="0" y="-9">Formative Assessment</text>
-      <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#EF9F27" text-anchor="middle" dominant-baseline="central" x="0" y="9">ongoing feedback loops</text>
+  <svg width="100%" viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg"
+       role="img"
+       aria-label="The Course Design House: an interactive diagram of five backward design components arranged as a house."
+       aria-describedby="svg-longdesc">
+ 
+    <desc id="svg-longdesc">A house diagram representing backward course design. The roof represents Learning Activities — readings, lectures, discussions, labs, and projects — designed last. The left wall represents Formative Assessment, ongoing feedback loops. The right wall represents Summative Assessment, culminating evidence of learning. The floor represents Learning Objectives, measurable outcomes. The foundation represents the Transformational Goal, the enduring purpose of the course. Each element is interactive: press Tab to navigate between elements, and Enter or Space to open a description.</desc>
+ 
+    <defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+    </defs>
+ 
+    <!-- FOUNDATION -->
+    <g class="part" id="p-foundation"
+       role="button" tabindex="0"
+       aria-label="Transformational Goal — the foundation"
+       aria-controls="detail-panel" aria-expanded="false"
+       onclick="show('foundation')" onkeydown="handleKey(event,'foundation')">
+      <rect x="70" y="340" width="500" height="58" rx="4" fill="#3B6EB5" stroke="#2A509E" stroke-width="0.5"/>
+      <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="500" fill="#B5D4F4" text-anchor="middle" x="320" y="362">Transformational Goal</text>
+      <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#85B7EB" text-anchor="middle" x="320" y="382">The &#34;Why&#34; &#8212; what enduring change do learners take away?</text>
     </g>
-  </g>
-
-  <!-- RIGHT WALL: Summative -->
-  <g class="part" id="p-summative" onclick="show('summative')">
-    <rect x="432" y="128" width="118" height="170" rx="4" fill="#993556" stroke="#72243E" stroke-width="0.5"/>
-    <g transform="translate(491,213) rotate(90)">
-      <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="500" fill="#F4C0D1" text-anchor="middle" dominant-baseline="central" x="0" y="-9">Summative Assessment</text>
-      <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#ED93B1" text-anchor="middle" dominant-baseline="central" x="0" y="9">culminating evidence</text>
+ 
+    <!-- FLOOR -->
+    <g class="part" id="p-floor"
+       role="button" tabindex="0"
+       aria-label="Learning Objectives — the floor"
+       aria-controls="detail-panel" aria-expanded="false"
+       onclick="show('floor')" onkeydown="handleKey(event,'floor')">
+      <rect x="90" y="296" width="460" height="46" rx="4" fill="#1D9E75" stroke="#0F6E56" stroke-width="0.5"/>
+      <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="500" fill="#9FE1CB" text-anchor="middle" x="320" y="316">Learning Objectives</text>
+      <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#5DCAA5" text-anchor="middle" x="320" y="333">Measurable outcomes &#8212; what learners will know, do, or value</text>
     </g>
-  </g>
-
-  <!-- ROOF -->
-  <g class="part" id="p-roof" onclick="show('roof')">
-    <polygon points="40,128 320,28 600,128" fill="#534AB7" stroke="#3C3489" stroke-width="0.5"/>
-    <line x1="85" y1="128" x2="255" y2="55" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
-    <line x1="178" y1="128" x2="298" y2="42" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
-    <line x1="275" y1="128" x2="320" y2="32" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
-    <line x1="370" y1="128" x2="340" y2="36" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
-    <line x1="463" y1="128" x2="382" y2="50" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
-    <line x1="555" y1="128" x2="425" y2="62" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
-    <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="500" fill="#CECBF6" text-anchor="middle" x="320" y="93">Learning Activities</text>
-    <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#AFA9EC" text-anchor="middle" x="320" y="112">readings · lectures · discussions · labs · projects</text>
-  </g>
-
-  <!-- Interior label -->
-  <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" fill="#888780" text-anchor="middle" x="320" y="220" opacity="0.7">← the learning environment →</text>
-  <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#888780" text-anchor="middle" x="320" y="238" opacity="0.55">click any element to learn more</text>
-
-  <!-- Backward Design arrow -->
-  <path d="M608 338 L608 136" stroke="#B4B2A9" stroke-width="0.8" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
-  <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#888780" text-anchor="middle" x="626" y="242" transform="rotate(90 626 242)">backward design</text>
+ 
+    <!-- LEFT WALL: Formative -->
+    <g class="part" id="p-formative"
+       role="button" tabindex="0"
+       aria-label="Formative Assessment — one wall"
+       aria-controls="detail-panel" aria-expanded="false"
+       onclick="show('formative')" onkeydown="handleKey(event,'formative')">
+      <rect x="90" y="128" width="96" height="170" rx="4" fill="#BA7517" stroke="#854F0B" stroke-width="0.5"/>
+      <g aria-hidden="true" transform="translate(138,213) rotate(-90)">
+        <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="500" fill="#FAC775" text-anchor="middle" dominant-baseline="central" x="0" y="-9">Formative Assessment</text>
+        <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#EF9F27" text-anchor="middle" dominant-baseline="central" x="0" y="9">ongoing feedback loops</text>
+      </g>
+    </g>
+ 
+    <!-- RIGHT WALL: Summative -->
+    <g class="part" id="p-summative"
+       role="button" tabindex="0"
+       aria-label="Summative Assessment — the other wall"
+       aria-controls="detail-panel" aria-expanded="false"
+       onclick="show('summative')" onkeydown="handleKey(event,'summative')">
+      <rect x="454" y="128" width="96" height="170" rx="4" fill="#993556" stroke="#72243E" stroke-width="0.5"/>
+      <g aria-hidden="true" transform="translate(502,213) rotate(90)">
+        <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="500" fill="#F4C0D1" text-anchor="middle" dominant-baseline="central" x="0" y="-9">Summative Assessment</text>
+        <text font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#ED93B1" text-anchor="middle" dominant-baseline="central" x="0" y="9">culminating evidence</text>
+      </g>
+    </g>
+ 
+    <!-- ROOF -->
+    <g class="part" id="p-roof"
+       role="button" tabindex="0"
+       aria-label="Learning Activities — the roof"
+       aria-controls="detail-panel" aria-expanded="false"
+       onclick="show('roof')" onkeydown="handleKey(event,'roof')">
+      <polygon points="40,128 320,28 600,128" fill="#534AB7" stroke="#3C3489" stroke-width="0.5"/>
+      <line aria-hidden="true" x1="85" y1="128" x2="255" y2="55" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
+      <line aria-hidden="true" x1="178" y1="128" x2="298" y2="42" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
+      <line aria-hidden="true" x1="275" y1="128" x2="320" y2="32" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
+      <line aria-hidden="true" x1="370" y1="128" x2="340" y2="36" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
+      <line aria-hidden="true" x1="463" y1="128" x2="382" y2="50" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
+      <line aria-hidden="true" x1="555" y1="128" x2="425" y2="62" stroke="#3C3489" stroke-width="0.4" opacity="0.5"/>
+      <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14" font-weight="500" fill="#CECBF6" text-anchor="middle" x="320" y="93">Learning Activities</text>
+      <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#AFA9EC" text-anchor="middle" x="320" y="112">readings &#183; lectures &#183; discussions &#183; labs &#183; projects</text>
+    </g>
+ 
+    <!-- Decorative interior labels -->
+    <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12" fill="#888780" text-anchor="middle" x="320" y="220" opacity="0.7">&#8592; the learning environment &#8594;</text>
+    <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="11" fill="#888780" text-anchor="middle" x="320" y="238" opacity="0.55">click or press Enter on any element to learn more</text>
+ 
+    <!-- Decorative backward design arrow -->
+    <path aria-hidden="true" d="M608 338 L608 136" stroke="#B4B2A9" stroke-width="0.8" stroke-dasharray="4 3" fill="none" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+    <text aria-hidden="true" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10" fill="#888780" text-anchor="middle" x="626" y="242" transform="rotate(90 626 242)">backward design</text>
   </svg>
   </div>
-
-  <!-- Legend -->
-  <div class="legend">
-    <div class="legend-item" onclick="show('foundation')"><div class="legend-dot" style="background:#3B6EB5"></div>Transformational goal</div>
-    <div class="legend-item" onclick="show('floor')"><div class="legend-dot" style="background:#1D9E75"></div>Learning objectives</div>
-    <div class="legend-item" onclick="show('formative')"><div class="legend-dot" style="background:#BA7517"></div>Formative assessment</div>
-    <div class="legend-item" onclick="show('summative')"><div class="legend-dot" style="background:#993556"></div>Summative assessment</div>
-    <div class="legend-item" onclick="show('roof')"><div class="legend-dot" style="background:#534AB7"></div>Learning activities</div>
-  </div>
-
-  <!-- Detail panel -->
-  <div class="panel" id="detail-panel">
+ 
+  <!-- Detail panel: aria-live announces updates to screen readers -->
+  <div id="detail-panel" class="panel"
+       role="region" aria-label="Element detail"
+       aria-live="polite" aria-atomic="true">
     <div class="panel-title" id="d-title"></div>
     <div class="panel-sub" id="d-body"></div>
     <div class="panel-wig" id="d-wig"></div>
-
   </div>
-
-  <p class="note">Based on Wiggins &amp; McTighe, <em>Understanding by Design</em> (2005) · CIPD / Adaptive Edge Institute</p>
+ 
+  <!-- Text alternative: full content in a collapsible <details> block -->
+  <details class="text-alt" id="text-alternative">
+    <summary>Text description of this diagram</summary>
+    <dl>
+      <dt>Learning Activities — the roof</dt>
+      <dd>The roof sits on top of the walls and holds it all together — but it is designed last, after the foundation and walls are in place. Learning activities (readings, lectures, labs, discussions, projects) are selected and sequenced to enable learners to reach the objectives and perform on the assessments. The roof's job is to shelter everything underneath, not to drive the design.</dd>
+      <dd class="wig-note">UbD Stage 3: plan learning experiences and instruction. Wiggins &amp; McTighe argue that teachers too often start here — the classic "twin sins" of activity-focused or coverage-focused design.</dd>
+ 
+      <dt>Formative Assessment — one wall</dt>
+      <dd>Formative assessments are the ongoing checks built into the learning process — low-stakes quizzes, drafts, discussions, exit tickets, peer review. Like a structural wall, they provide lateral support and keep the course aligned as it unfolds. They exist to inform instruction and give learners feedback while there's still time to adjust.</dd>
+      <dd class="wig-note">UbD Stage 2 asks: what evidence will show that learning is happening in progress? Formative evidence helps both instructor and learner see where they are relative to the goals.</dd>
+ 
+      <dt>Summative Assessment — the other wall</dt>
+      <dd>Summative assessments are the culminating demonstrations of learning — final projects, exams, portfolios, presentations. As the other load-bearing wall, they provide symmetrical structural support. In backward design, you define these before you plan instruction, because the endpoint shapes everything else.</dd>
+      <dd class="wig-note">Wiggins &amp; McTighe emphasize authentic performance tasks as the gold standard for summative evidence — tasks that ask learners to apply knowledge in meaningful, real-world contexts.</dd>
+ 
+      <dt>Learning Objectives — the floor</dt>
+      <dd>The floor rests directly on the foundation and gives the house a surface to stand on. Learning objectives translate the transformational goal into specific, measurable outcomes — what learners will be able to know, do, or value by the end of the course. They provide the platform everything else stands on.</dd>
+      <dd class="wig-note">UbD Stage 1: identifying desired results. Wiggins &amp; McTighe recommend framing objectives around transfer, meaning-making, and acquisition.</dd>
+ 
+      <dt>Transformational Goal — the foundation</dt>
+      <dd>The foundation supports the entire structure. A transformational goal articulates the deepest purpose of a course: not just what learners will know, but who they will become. It answers the question, "Why does this course exist?" Everything else is built on top of it. Without a solid foundation, the house collapses.</dd>
+      <dd class="wig-note">Wiggins &amp; McTighe call this the "enduring understanding" — the big ideas and core processes that transfer to new contexts long after the unit ends.</dd>
+    </dl>
+  </details>
+ 
+  <p class="note">Based on Wiggins &amp; McTighe, <em>Understanding by Design</em> (2005) &middot; CIPD / Adaptive Edge Institute</p>
 </div>
-
+ 
 <script>
 const data = {
   foundation: {
@@ -186,18 +254,29 @@ const data = {
     wig: "This is Stage 3 in UbD: plan learning experiences and instruction. Wiggins & McTighe argue that teachers too often start here — the classic 'twin sins' of activity-focused or coverage-focused design."
   }
 };
-
-let current = null;
-
+ 
 function show(key) {
   const d = data[key];
   document.getElementById('d-title').textContent = d.title;
   document.getElementById('d-body').textContent = d.body;
   document.getElementById('d-wig').textContent = d.wig;
   document.getElementById('detail-panel').classList.add('active');
-  document.querySelectorAll('.part').forEach(el => el.classList.remove('selected'));
-  document.getElementById('p-' + key)?.classList.add('selected');
-  current = key;
+  document.querySelectorAll('.part').forEach(el => {
+    el.classList.remove('selected');
+    el.setAttribute('aria-expanded', 'false');
+  });
+  const selected = document.getElementById('p-' + key);
+  if (selected) {
+    selected.classList.add('selected');
+    selected.setAttribute('aria-expanded', 'true');
+  }
+}
+ 
+function handleKey(event, key) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    show(key);
+  }
 }
 </script>
 </body>
