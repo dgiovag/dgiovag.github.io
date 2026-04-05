@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crossroads Campaign Table — Bravo Fleet 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap');
+
+  :root {
+    --bf-blue: #2864A8;
+    --bf-gold: #D3A92C;
+    --bf-dark: #0a0e1a;
+    --bf-darker: #060810;
+    --bf-mid: #111827;
+    --bf-panel: #0d1525;
+    --bf-border: rgba(40,100,168,0.35);
+    --bf-border-gold: rgba(211,169,44,0.4);
+    --bf-text: #c8d8ee;
+    --bf-text-dim: #6a85a8;
+    --bf-glow: rgba(40,100,168,0.6);
+    --bf-glow-gold: rgba(211,169,44,0.5);
+    --transition: 0.3s ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bf-darker);
+    color: var(--bf-text);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Star field background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 35%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 65% 90%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(2px 2px at 42% 33%, rgba(40,100,168,0.4) 0%, transparent 100%),
+      radial-gradient(2px 2px at 78% 55%, rgba(211,169,44,0.3) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Nebula glow */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 30%, rgba(40,100,168,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 60% at 80% 70%, rgba(211,169,44,0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 80% 50% at 50% 100%, rgba(40,100,168,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* Header */
+  header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--bf-border);
+    position: relative;
+  }
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 50%; transform: translateX(-50%);
+    width: 200px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bf-gold), transparent);
+  }
+
+  .header-logo {
+    width: 56px; height: 56px;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 0 12px var(--bf-glow));
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #fff;
+    text-shadow: 0 0 20px var(--bf-glow), 0 0 40px var(--bf-glow);
+    line-height: 1.2;
+  }
+
+  .header-sub {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--bf-gold);
+    letter-spacing: 0.2em;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  /* Section headers */
+  .section-label {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--bf-gold);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-label::before, .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bf-border-gold));
+  }
+  .section-label::after {
+    background: linear-gradient(90deg, var(--bf-border-gold), transparent);
+  }
+
+  /* Cards / panels */
+  .panel {
+    background: var(--bf-panel);
+    border: 1px solid var(--bf-border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+    position: relative;
+    transition: border-color var(--transition);
+  }
+  .panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--bf-blue), transparent);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+  .panel.active::before { opacity: 1; }
+  .panel.active { border-color: rgba(40,100,168,0.6); }
+
+  .panel-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: #fff;
+    margin-bottom: 0.35rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .panel-title .die-badge {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    background: rgba(40,100,168,0.3);
+    border: 1px solid var(--bf-border);
+    border-radius: 2px;
+    padding: 0.1em 0.4em;
+    color: var(--bf-gold);
+    letter-spacing: 0.1em;
+  }
+
+  .panel-desc {
+    font-size: 0.85rem;
+    color: var(--bf-text-dim);
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    font-weight: 300;
+  }
+
+  /* Dice roller */
+  .roll-area {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-roll {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--bf-blue);
+    color: var(--bf-blue);
+    padding: 0.55em 1.4em;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .btn-roll::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--bf-blue);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+    z-index: -1;
+  }
+  .btn-roll:hover { color: #fff; border-color: var(--bf-blue); box-shadow: 0 0 16px var(--bf-glow); }
+  .btn-roll:hover::before { transform: scaleX(1); }
+  .btn-roll:disabled { opacity: 0.3; cursor: not-allowed; }
+  .btn-roll:disabled:hover::before { transform: scaleX(0); }
+  .btn-roll:disabled:hover { color: var(--bf-blue); box-shadow: none; }
+
+  .btn-continue {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid var(--bf-gold);
+    color: var(--bf-gold);
+    padding: 0.55em 1.4em;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all var(--transition);
+    position: relative;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .btn-continue::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(211,169,44,0.15);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+    z-index: -1;
+  }
+  .btn-continue:hover { box-shadow: 0 0 16px var(--bf-glow-gold); }
+  .btn-continue:hover::before { transform: scaleX(1); }
+
+  /* Dice graphic */
+  .dice-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .die-svg {
+    width: 44px; height: 44px;
+    transition: transform 0.1s ease;
+  }
+  .die-svg.rolling {
+    animation: diceRoll 0.5s ease;
+  }
+  @keyframes diceRoll {
+    0%   { transform: rotate(0deg) scale(1); }
+    20%  { transform: rotate(72deg) scale(1.15); }
+    40%  { transform: rotate(144deg) scale(0.9); }
+    60%  { transform: rotate(216deg) scale(1.1); }
+    80%  { transform: rotate(288deg) scale(0.95); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  .die-number {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--bf-gold);
+    min-width: 1.5rem;
+    text-align: center;
+    text-shadow: 0 0 10px var(--bf-glow-gold);
+  }
+
+  /* Result box */
+  .result-box {
+    margin-top: 1rem;
+    padding: 1rem 1.2rem;
+    background: rgba(40,100,168,0.08);
+    border-left: 3px solid var(--bf-blue);
+    border-radius: 0 3px 3px 0;
+    display: none;
+    animation: fadeSlideIn 0.35s ease forwards;
+  }
+  .result-box.visible { display: block; }
+  @keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .result-number {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--bf-gold);
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
+  }
+
+  .result-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #e8f0fa;
+    line-height: 1.5;
+  }
+
+  .result-note {
+    font-size: 0.82rem;
+    color: var(--bf-text-dim);
+    margin-top: 0.4rem;
+    font-style: italic;
+    line-height: 1.4;
+  }
+
+  /* Conditional next roll prompt */
+  .next-prompt {
+    margin-top: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: rgba(211,169,44,0.06);
+    border: 1px dashed var(--bf-border-gold);
+    border-radius: 3px;
+    font-size: 0.82rem;
+    color: var(--bf-gold);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .next-prompt-text { flex: 1; line-height: 1.4; }
+
+  /* Optional tables section */
+  .optional-section {
+    margin-top: 2rem;
+  }
+
+  .optional-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1rem;
+  }
+
+  /* Reset button */
+  .btn-reset {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.3);
+    padding: 0.5em 1.2em;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all var(--transition);
+    margin-top: 2rem;
+    display: block;
+    margin-left: auto;
+  }
+  .btn-reset:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.6); }
+
+  /* Summary panel at top once rolling is done */
+  .summary-panel {
+    background: rgba(211,169,44,0.05);
+    border: 1px solid var(--bf-border-gold);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    display: none;
+  }
+  .summary-panel.visible { display: block; animation: fadeSlideIn 0.4s ease; }
+  .summary-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    color: var(--bf-gold);
+    margin-bottom: 1rem;
+  }
+  .summary-item {
+    display: flex;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    align-items: baseline;
+  }
+  .summary-key {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--bf-text-dim);
+    white-space: nowrap;
+    min-width: 140px;
+    flex-shrink: 0;
+  }
+  .summary-val { color: #e8f0fa; font-weight: 500; }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bf-border), transparent);
+    margin: 2rem 0;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .optional-grid { grid-template-columns: 1fr; }
+    .next-prompt { flex-direction: column; }
+    .summary-key { min-width: 100px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <header>
+    <!-- BF bolt logo inline SVG approximation -->
+    <svg class="header-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="55,5 20,55 48,55 45,95 80,45 52,45" fill="#2864A8" filter="url(#glow)"/>
+      <defs>
+        <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+    </svg>
+    <h1>CROSSROADS</h1>
+    <div class="header-sub">Campaign Table — Bravo Fleet Fleet Action 2026</div>
+  </header>
+
+  <!-- Summary panel (shown after main rolls complete) -->
+  <div class="summary-panel" id="summaryPanel">
+    <div class="summary-title">◈ MISSION SUMMARY</div>
+    <div id="summaryItems"></div>
+  </div>
+
+  <!-- SECTION 1: Search and Rescue -->
+  <div class="section-label">Search &amp; Rescue</div>
+
+  <div class="panel active" id="panel-displaced">
+    <div class="panel-title">
+      The Displaced
+      <span class="die-badge">d9</span>
+    </div>
+    <div class="panel-desc">Who is the Displaced individual your command has been ordered to locate and return to their proper reality?</div>
+    <div class="roll-area">
+      <button class="btn-roll" onclick="rollTable('displaced')">Roll d9</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-displaced" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,4 56,20 56,40 30,56 4,40 4,20" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-displaced-num" x="30" y="34" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="16" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-displaced"></div>
+  </div>
+
+  <div class="panel" id="panel-intel">
+    <div class="panel-title">
+      Intelligence Level
+      <span class="die-badge">d4</span>
+    </div>
+    <div class="panel-desc">What does your crew know about their assignment? How much has Wesley Crusher been able to share?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-intel" onclick="rollTable('intel')" disabled>Roll d4</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-intel" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,5 55,50 5,50" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-intel-num" x="30" y="44" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="14" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-intel"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 2: The Multiverse -->
+  <div class="section-label">The Multiverse</div>
+
+  <div class="panel" id="panel-universe">
+    <div class="panel-title">
+      Nature of the Universe
+      <span class="die-badge">d4</span>
+    </div>
+    <div class="panel-desc">What is the nature of the alternate reality your command is venturing into?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-universe" onclick="rollTable('universe')" disabled>Roll d4</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-universe" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,5 55,50 5,50" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-universe-num" x="30" y="44" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="14" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-universe"></div>
+    <div id="universe-next"></div>
+  </div>
+
+  <!-- Conditional: Alternate Past sub-tables -->
+  <div class="panel" id="panel-past-when" style="display:none">
+    <div class="panel-title">
+      Alternate Past — When &amp; Where
+      <span class="die-badge">d9</span>
+    </div>
+    <div class="panel-desc">Your crew has arrived in the past of an alternate reality. Where and when are they?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-past-when" onclick="rollTable('past-when')">Roll d9</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-past-when" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,4 56,20 56,40 30,56 4,40 4,20" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-past-when-num" x="30" y="34" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="16" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-past-when"></div>
+  </div>
+
+  <div class="panel" id="panel-past-diverge" style="display:none">
+    <div class="panel-title">
+      Alternate Past — Divergence
+      <span class="die-badge">d3</span>
+    </div>
+    <div class="panel-desc">How different is this alternate past from recorded history?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-past-diverge" onclick="rollTable('past-diverge')">Roll d3</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-past-diverge" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,5 55,50 5,50" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-past-diverge-num" x="30" y="44" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="14" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-past-diverge"></div>
+  </div>
+
+  <!-- Conditional: Alternate Future sub-table -->
+  <div class="panel" id="panel-future" style="display:none">
+    <div class="panel-title">
+      Alternate Future — Character
+      <span class="die-badge">d6</span>
+    </div>
+    <div class="panel-desc">Your crew has arrived in the future of an alternate reality. What awaits them?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-future" onclick="rollTable('future')">Roll d6</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-future" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="6" width="48" height="48" rx="8" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-future-num" x="30" y="38" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="20" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-future"></div>
+  </div>
+
+  <!-- Conditional: Alternate Present sub-tables -->
+  <div class="panel" id="panel-present-scale" style="display:none">
+    <div class="panel-title">
+      Alternate Present — Scale of Difference
+      <span class="die-badge">d4</span>
+    </div>
+    <div class="panel-desc">How widely does this present-day alternate reality diverge from the prime?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-present-scale" onclick="rollTable('present-scale')">Roll d4</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-present-scale" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,5 55,50 5,50" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-present-scale-num" x="30" y="44" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="14" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-present-scale"></div>
+    <div id="present-scale-next"></div>
+  </div>
+
+  <!-- Conditional: Personal Divergence -->
+  <div class="panel" id="panel-personal" style="display:none">
+    <div class="panel-title">
+      Personal Divergence
+      <span class="die-badge">d6</span>
+    </div>
+    <div class="panel-desc">What has happened to your characters in this reality where the changes are personal, not galactic?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-personal" onclick="rollTable('personal')">Roll d6</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-personal" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="6" width="48" height="48" rx="8" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-personal-num" x="30" y="38" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="20" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-personal"></div>
+  </div>
+
+  <!-- Conditional: Divergence in Living Memory -->
+  <div class="panel" id="panel-memory" style="display:none">
+    <div class="panel-title">
+      Divergence in Living Memory
+      <span class="die-badge">d6</span>
+    </div>
+    <div class="panel-desc">This reality was identical to the prime—until a point within your characters' lifetime. What changed?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-memory" onclick="rollTable('memory')">Roll d6</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-memory" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="6" width="48" height="48" rx="8" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-memory-num" x="30" y="38" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="20" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-memory"></div>
+  </div>
+
+  <!-- Conditional: Highly Divergent Reality -->
+  <div class="panel" id="panel-divergent" style="display:none">
+    <div class="panel-title">
+      Highly Divergent Reality
+      <span class="die-badge">d6</span>
+    </div>
+    <div class="panel-desc">This reality is as different to the prime as the Mirror Universe. What does it look like?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-divergent" onclick="rollTable('divergent')">Roll d6</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-divergent" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="6" width="48" height="48" rx="8" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-divergent-num" x="30" y="38" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="20" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-divergent"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- SECTION 3: Obstacles -->
+  <div class="section-label">Obstacles</div>
+
+  <div class="panel" id="panel-placing">
+    <div class="panel-title">
+      Placing the Displaced
+      <span class="die-badge">d6</span>
+    </div>
+    <div class="panel-desc">Why isn't it simple to find the Displaced and bring them home?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-placing" onclick="rollTable('placing')" disabled>Roll d6</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-placing" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="6" width="48" height="48" rx="8" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-placing-num" x="30" y="38" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="20" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-placing"></div>
+  </div>
+
+  <div class="panel" id="panel-obstacles">
+    <div class="panel-title">
+      Other Obstacles
+      <span class="die-badge">d8</span>
+    </div>
+    <div class="panel-desc">What further challenges will your command face across universes?</div>
+    <div class="roll-area">
+      <button class="btn-roll" id="btn-obstacles" onclick="rollTable('obstacles')" disabled>Roll d8</button>
+      <div class="dice-display">
+        <svg class="die-svg" id="die-obstacles" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="30,4 56,20 56,40 30,56 4,40 4,20" fill="none" stroke="#2864A8" stroke-width="2"/>
+          <text id="die-obstacles-num" x="30" y="34" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="16" fill="#D3A92C">—</text>
+        </svg>
+      </div>
+    </div>
+    <div class="result-box" id="result-obstacles"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- OPTIONAL TABLES -->
+  <div class="optional-section">
+    <div class="section-label">Optional Tables</div>
+    <p style="font-size:0.85rem; color:var(--bf-text-dim); margin-bottom:1.25rem; text-align:center; font-weight:300;">
+      These tables can be rolled at any time—they aren't required but can add further texture to your mission.
+    </p>
+
+    <div class="optional-grid">
+
+      <div class="panel" id="panel-incursions">
+        <div class="panel-title">
+          Incursions
+          <span class="die-badge">d8</span>
+        </div>
+        <div class="panel-desc" style="font-size:0.8rem;">For missions dealing with the Displaced already in the Prime universe instead of venturing to another reality.</div>
+        <div class="roll-area">
+          <button class="btn-roll" onclick="rollTable('incursions')">Roll d8</button>
+          <div class="dice-display">
+            <svg class="die-svg" id="die-incursions" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="30,4 56,20 56,40 30,56 4,40 4,20" fill="none" stroke="#2864A8" stroke-width="2"/>
+              <text id="die-incursions-num" x="30" y="34" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="16" fill="#D3A92C">—</text>
+            </svg>
+          </div>
+        </div>
+        <div class="result-box" id="result-incursions"></div>
+      </div>
+
+      <div class="panel" id="panel-loom">
+        <div class="panel-title">
+          The Loom
+          <span class="die-badge">d8</span>
+        </div>
+        <div class="panel-desc" style="font-size:0.8rem;">If the Loom appear in your story, what form does their interference take?</div>
+        <div class="roll-area">
+          <button class="btn-roll" onclick="rollTable('loom')">Roll d8</button>
+          <div class="dice-display">
+            <svg class="die-svg" id="die-loom" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <polygon points="30,4 56,20 56,40 30,56 4,40 4,20" fill="none" stroke="#2864A8" stroke-width="2"/>
+              <text id="die-loom-num" x="30" y="34" text-anchor="middle" font-family="Orbitron,sans-serif" font-size="16" fill="#D3A92C">—</text>
+            </svg>
+          </div>
+        </div>
+        <div class="result-box" id="result-loom"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="btn-reset" onclick="resetAll()">↺ Reset All Tables</button>
+
+</div>
+
+<script>
+// ─── TABLE DATA ───────────────────────────────────────────────────────────────
+
+const TABLES = {
+  displaced: [
+    { text: "A major character from your cast/crew.", note: null },
+    { text: "The loved one of one of your major characters.", note: null },
+    { text: "One of your other commands—the ship and crew (or most of them) are missing.", note: null },
+    { text: "An NPC Starfleet vessel.", note: null },
+    { text: "A Task Force Asset.", note: "Check with TF staff for availability." },
+    { text: "A non-Starfleet vessel (Klingon, Cardassian, Romulan, etc.) introducing political pressure.", note: null },
+    { text: "A high-profile civilian (scientist, politician, cultural figure, celebrity).", note: null },
+    { text: "Someone from another reality displaced into the prime universe, wearing a familiar face. Rather than travel into another universe, your command must find them and send them home.", note: "Use the Doppelganger tables for more detail." },
+    { text: "The identity is unknown—merely that there is someone to be found.", note: "Feel free to roll again on this table for the Displaced's actual identity." },
+  ],
+  intel: [
+    { text: "Nearly nothing. The Traveler has provided Starfleet with a quantum signature to get through the portal, but no more is known.", note: null },
+    { text: "A little. For example: 'it's a reality where the Federation was never founded,' with no information on what that looks like or what to expect.", note: null },
+    { text: "A developed understanding of the status quo and life in that universe, though with no or few leads on where to find the Displaced.", note: "Example: 'it's a reality where the Dominion won the war.'" },
+    { text: "A thorough briefing on the reality ensuring robust preparedness, and strong leads on the location of the Displaced.", note: null },
+  ],
+  universe: [
+    { text: "An alternate past, where history itself has changed.", note: "Roll on: Alternate Past — When & Where, then Divergence.", conditional: 'past' },
+    { text: "An alternate future.", note: "Roll on: Alternate Future — Character.", conditional: 'future' },
+    { text: "An alternate present, the year 2403 in a different reality.", note: "Roll on: Alternate Present — Scale of Difference.", conditional: 'present' },
+    { text: "A reality with unstable or non-linear time.", note: "No sub-table required. Embrace the temporal chaos." },
+  ],
+  'past-when': [
+    { text: "Very recent history, within the lived memory of your (human-aged) characters.", note: null },
+    { text: "Some time between the founding of the Federation and the mid-24th century.", note: "Pick your favourite Trek era!" },
+    { text: "Some time between First Contact and the founding of the Federation.", note: null },
+    { text: "Earth, between the real-world near-future and First Contact — the time of World War III.", note: null },
+    { text: "Earth, the real-world present day (or slightly earlier).", note: null },
+    { text: "Earth, some time in the 2nd millennium CE.", note: null },
+    { text: "Some time on Ancient Earth.", note: null },
+    { text: "The prehistoric era.", note: null },
+    { text: "The pre-Federation founding history of another planet, like Vulcan or Qo'noS.", note: null },
+  ],
+  'past-diverge': [
+    { text: "Nearly identical — history appears to have unfolded exactly as expected, at least at first glance.", note: null },
+    { text: "Altered — important differences show that events did not unfold quite the same way.", note: null },
+    { text: "Strongly divergent — major historical developments differ, reshaping society and governments.", note: null },
+  ],
+  future: [
+    { text: "A near-future, within the lifetimes of your characters — a glimpse into what could lie ahead.", note: null },
+    { text: "A dark future, where current or recent events took the worst course.", note: null },
+    { text: "A future where your crew and characters are remembered, and their potential legacy may be reflected on.", note: null },
+    { text: "A hopeful future, where the galaxy is more stable or unified than expected.", note: null },
+    { text: "A distant future, so far ahead that familiar institutions are long gone.", note: null },
+    { text: "A specific distant future: an alternate reality in the 32nd century.", note: "The setting of Discovery season 3 onwards and Starfleet Academy — though not exactly the same universe." },
+  ],
+  'present-scale': [
+    { text: "The differences are only personal — the galaxy is broadly familiar, but the lives of specific individuals unfolded very differently.", note: "Roll on: Personal Divergence.", conditional: 'personal' },
+    { text: "The point of divergence was in living memory, such as the Borg never being defeated after Wolf 359.", note: "Roll on: Divergence in Living Memory.", conditional: 'memory' },
+    { text: "The institutions and history of the galaxy are very different, a level of divergence comparable to the Mirror Universe.", note: "Roll on: Highly Divergent Reality.", conditional: 'divergent' },
+    { text: "The reality operates on unfamiliar or alien principles — its physics, biology, culture, or even concepts of identity differ fundamentally from the prime universe.", note: "No sub-table. Embrace the weird: perhaps physics works differently; perhaps identity itself is collective; perhaps time flows in two directions." },
+  ],
+  personal: [
+    { text: "Your characters were never assigned to your ship. Where are they instead?", note: null },
+    { text: "Your characters live what they might describe as the 'ideal' life, where moments of past regret never happened, and they achieved their goals. Is it truly all they dreamed of?", note: null },
+    { text: "Your characters never joined Starfleet altogether, living wholly different lives.", note: null },
+    { text: "Your characters are known for something they never did in the prime universe — a moment of heroism, scandal, failure, etc.", note: null },
+    { text: "Your characters may still be assigned to the same ship — but their relationships among each other are different. Different friendships, loved ones, enemies.", note: null },
+    { text: "Your characters are on opposing sides — rival crews, different political factions, etc.", note: null },
+  ],
+  memory: [
+    { text: "The Borg won — at Wolf 359, at Sector 001, at Frontier Day, on some other occasion. Did the Federation fall to them?", note: null },
+    { text: "The Dominion War ended differently. Perhaps the Romulans never joined the conflict, and the Dominion won. Perhaps the surrender never came, and it led to a brutal, drawn-out, bloodied ending.", note: null },
+    { text: "The Romulan supernova never happened, and the Star Empire remains a major power in the Beta Quadrant — for good or ill.", note: null },
+    { text: "The Klingon-Federation alliance was never restored in the 2370s, or collapsed again soon after, leading to decades of cold war.", note: null },
+    { text: "The truth about the Attack on Mars was never discovered in 2399. The synth ban remains, and Starfleet/the Federation is still inward-looking, isolationist, and borderline xenophobic.", note: null },
+    { text: "The Federation stayed committed to the Romulan evacuation after the Attack on Mars — and collapsed when core worlds subsequently left.", note: null },
+  ],
+  divergent: [
+    { text: "A human-led authoritarian interstellar empire dominates the Alpha and Beta Quadrants. The Federation never formed, or was replaced, by a militant, expansionist regime. It's not the Terran Empire — but might as well be.", note: null },
+    { text: "The Federation never formed; perhaps Earth lost the Romulan War. Now another great power — the Romulan Star Empire, or the Klingon Empire — dominates the Alpha and Beta Quadrants.", note: null },
+    { text: "None of the great powers ever rose, or lasted. The galaxy is made up of smaller factions and is a rougher, more dangerous place.", note: null },
+    { text: "The Federation exists — thrives, even — and none of its rivals endured. Is this a seemingly impossible utopia, or something more sinister?", note: null },
+    { text: "An ancient power, such as the Tkon, the Iconians, or even the mysterious AI race from PIC season 1, never fell.", note: null },
+    { text: "Warp travel was never developed; the galaxy's interstellar connectivity was born from an alternate means of FTL, fundamentally changing geopolitics.", note: null },
+  ],
+  placing: [
+    { text: "The Displaced has been taken captive by an enemy who mistakes them for their doppelganger — or is simply so well protected that getting to them is difficult.", note: null },
+    { text: "The Displaced has been trapped somewhere — a wrecked ship, a stellar phenomenon, behind enemy lines — and must be rescued.", note: null },
+    { text: "The Displaced, for whatever reason, doesn't want to return — and forcing them won't be easy.", note: null },
+    { text: "The Displaced has taken their doppelganger's place at a crucial moment, where they are expected to fulfil some major personal or political duty. Simply removing them could be disastrous. Events must be helped to play out first.", note: null },
+    { text: "The Displaced is being hunted by someone in this universe, and is on the run. Find them before their hunters do.", note: null },
+    { text: "The Displaced's true nature has been discovered by those around them. Are they being imprisoned as a threat? Studied? Worshipped?", note: null },
+  ],
+  obstacles: [
+    { text: "Your crew, upon arrival, make a dangerous enemy. Perhaps one who mistakes them for their doppelgangers — or who realises the truth. Whatever your crew does, this enemy will try to thwart them.", note: null },
+    { text: "The incursions of the Displaced have already caused chaos in this reality. For whatever reason, your crew feel obligated — or are forced — to try to fix what was broken before they leave.", note: null },
+    { text: "Your crew are forced to leave their ship behind upon arrival. Perhaps it's been damaged. Perhaps it'll draw too much attention. Either way, the mission has to be pursued a different way.", note: null },
+    { text: "Your crew have to infiltrate this reality to complete their mission — which means acting as if they belong, perhaps posing as their doppelgangers. Except those doppelgangers are still here, somewhere.", note: null },
+    { text: "Your crew's arrival is spotted by someone, and recognised for what it is — an incursion from another dimension. Now your crew need to evade a foe who treat them as a threat, or an opportunity.", note: null },
+    { text: "To complete the mission, your crew has to ally themselves with an individual or faction in this dimension. What help do they get in return? And what needs to be done to secure it?", note: null },
+    { text: "Your crew becomes separated upon arrival. Whether by accident, sabotage, or local conditions, they must operate independently.", note: null },
+    { text: "It becomes clear that to complete the mission, your crew must cross paths with their own doppelgangers. How can that be navigated?", note: null },
+  ],
+  incursions: [
+    { text: "They're exposed but on the run, with their own resources and their own dangerous agenda.", note: null },
+    { text: "They've taken the place of their Prime doppelganger, infiltrating their life — and exposing or removing them will be difficult.", note: null },
+    { text: "Someone powerful has taken them in, perhaps knowing their nature and seeking to use it.", note: null },
+    { text: "They have already caused some form of chaos or disruption. It's not just about finding them, but fixing what they've broken.", note: null },
+    { text: "Someone else is also hunting them — perhaps a non-Starfleet power, or even other Displaced from their own universe.", note: null },
+    { text: "They have no malicious intent — but desperately do not want to be returned to their own universe, perhaps considering it a death sentence, and will do their utmost to avoid that.", note: null },
+    { text: "They've committed a serious crime against a non-Federation power, who isn't about to simply let them go — and unless convinced otherwise, will hold the offence against their Prime doppelganger in the future.", note: null },
+    { text: "They're prepared to return to their universe — but only once they've secured something, some technology or object or scientific knowledge, that will help them in their own reality.", note: null },
+  ],
+  loom: [
+    { text: "The Loom have already arrived in this reality. They stalk the Displaced specifically, erasing anyone who gets in their way.", note: null },
+    { text: "The Loom identifies your crew as the incursion, and the crew become the primary targets of a relentless hunt.", note: null },
+    { text: "The Loom are drawn to disruptions in this timeline. Any major action taken by your crew or the Displaced risks drawing their attention.", note: null },
+    { text: "They are already erasing people. Individuals in proximity to the Displaced are disappearing one by one.", note: null },
+    { text: "Someone has or seeks to capture a Loom. A powerful figure or faction is attempting to weaponise it.", note: null },
+    { text: "The Loom are focused on some other paradox or disruption in this galaxy, and your crew's mission is merely collateral damage.", note: null },
+    { text: "A Loom is wounded or unstable. Its behaviour is unpredictable and destructive.", note: null },
+    { text: "The Loom have considered the entire reality unstable. They begin erasing more and more of it — eventually the entire reality.", note: "This result is not appropriate for the prime universe!" },
+  ],
+};
+
+// Table display names for summary
+const TABLE_NAMES = {
+  displaced: 'The Displaced',
+  intel: 'Intelligence Level',
+  universe: 'Nature of Universe',
+  'past-when': 'Past — When & Where',
+  'past-diverge': 'Past — Divergence',
+  future: 'Alternate Future',
+  'present-scale': 'Present — Scale',
+  personal: 'Personal Divergence',
+  memory: 'Divergence in Memory',
+  divergent: 'Highly Divergent',
+  placing: 'Placing the Displaced',
+  obstacles: 'Other Obstacles',
+  incursions: 'Incursions',
+  loom: 'The Loom',
+};
+
+// Track state
+const state = {
+  rolls: {},
+  phase: 'displaced', // flow phases
+};
+
+// Main flow order (required tables)
+const MAIN_FLOW = ['displaced', 'intel', 'universe', 'placing', 'obstacles'];
+
+// ─── ROLL LOGIC ───────────────────────────────────────────────────────────────
+
+function rollTable(tableId) {
+  const table = TABLES[tableId];
+  const n = table.length;
+  const roll = Math.floor(Math.random() * n) + 1;
+  const result = table[roll - 1];
+
+  // Animate die
+  const die = document.getElementById('die-' + tableId);
+  const dieNum = document.getElementById('die-' + tableId + '-num');
+  if (die) {
+    die.classList.remove('rolling');
+    void die.offsetWidth; // reflow
+    die.classList.add('rolling');
+    setTimeout(() => die.classList.remove('rolling'), 550);
+  }
+  if (dieNum) dieNum.textContent = roll;
+
+  // Show result
+  const resultBox = document.getElementById('result-' + tableId);
+  if (resultBox) {
+    resultBox.innerHTML = `
+      <div class="result-number">RESULT ${roll} / ${n}</div>
+      <div class="result-text">${result.text}</div>
+      ${result.note ? `<div class="result-note">${result.note}</div>` : ''}
+    `;
+    resultBox.classList.remove('visible');
+    void resultBox.offsetWidth;
+    resultBox.classList.add('visible');
+  }
+
+  // Mark panel active
+  const panel = document.getElementById('panel-' + tableId);
+  if (panel) panel.classList.add('active');
+
+  // Save roll
+  state.rolls[tableId] = { roll, result };
+
+  // Handle conditional next steps
+  handleConditionals(tableId, roll, result);
+
+  // Update summary
+  updateSummary();
+}
+
+function handleConditionals(tableId, roll, result) {
+  if (tableId === 'displaced') {
+    unlockPanel('intel');
+    enableBtn('btn-intel');
+    return;
+  }
+
+  if (tableId === 'intel') {
+    unlockPanel('universe');
+    enableBtn('btn-universe');
+    return;
+  }
+
+  if (tableId === 'universe') {
+    const cond = result.conditional;
+    // Show the appropriate sub-panels
+    hideConditionalPanels(['panel-past-when','panel-past-diverge','panel-future','panel-present-scale','panel-personal','panel-memory','panel-divergent']);
+
+    if (cond === 'past') {
+      showPanel('panel-past-when');
+      showPanel('panel-past-diverge');
+      // After these rolls, unlock obstacles
+      showNextPromptAfterConditional('panel-past-diverge', 'placing');
+    } else if (cond === 'future') {
+      showPanel('panel-future');
+      showNextPromptAfterPanel('panel-future', 'placing');
+    } else if (cond === 'present') {
+      showPanel('panel-present-scale');
+      // present-scale has its own conditionals
+    } else {
+      // Unstable time — no sub-table
+      unlockPanel('placing');
+      enableBtn('btn-placing');
+    }
+    return;
+  }
+
+  if (tableId === 'past-diverge') {
+    unlockPanel('placing');
+    enableBtn('btn-placing');
+    return;
+  }
+
+  if (tableId === 'future') {
+    unlockPanel('placing');
+    enableBtn('btn-placing');
+    return;
+  }
+
+  if (tableId === 'present-scale') {
+    const cond = result.conditional;
+    hideConditionalPanels(['panel-personal','panel-memory','panel-divergent']);
+    if (cond === 'personal') {
+      showPanel('panel-personal');
+      showNextPromptAfterPanel('panel-personal', 'placing');
+    } else if (cond === 'memory') {
+      showPanel('panel-memory');
+      showNextPromptAfterPanel('panel-memory', 'placing');
+    } else if (cond === 'divergent') {
+      showPanel('panel-divergent');
+      showNextPromptAfterPanel('panel-divergent', 'placing');
+    } else {
+      // Alien principles — no sub-table
+      unlockPanel('placing');
+      enableBtn('btn-placing');
+    }
+    return;
+  }
+
+  if (['personal','memory','divergent'].includes(tableId)) {
+    unlockPanel('placing');
+    enableBtn('btn-placing');
+    return;
+  }
+
+  if (tableId === 'placing') {
+    unlockPanel('obstacles');
+    enableBtn('btn-obstacles');
+    return;
+  }
+
+  if (tableId === 'obstacles') {
+    // Main flow complete — show summary
+    document.getElementById('summaryPanel').classList.add('visible');
+    document.getElementById('summaryPanel').scrollIntoView({behavior:'smooth', block:'nearest'});
+    return;
+  }
+}
+
+// ─── PANEL HELPERS ────────────────────────────────────────────────────────────
+
+function unlockPanel(panelId) {
+  const p = document.getElementById(panelId);
+  if (p) p.style.display = '';
+}
+
+function showPanel(panelId) {
+  const p = document.getElementById(panelId);
+  if (p) {
+    p.style.display = '';
+    p.style.animation = 'fadeSlideIn 0.35s ease';
+  }
+}
+
+function hideConditionalPanels(ids) {
+  ids.forEach(id => {
+    const p = document.getElementById(id);
+    if (p) p.style.display = 'none';
+  });
+}
+
+function enableBtn(btnId) {
+  const btn = document.getElementById(btnId);
+  if (btn) btn.disabled = false;
+}
+
+function showNextPromptAfterPanel(panelId, nextTableId) {
+  // Attach a continue button to the panel result box via MutationObserver trick
+  // Actually simpler: add it to the panel directly after the result box
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  // Remove existing next prompts
+  panel.querySelectorAll('.next-prompt').forEach(e => e.remove());
+  const prompt = document.createElement('div');
+  prompt.className = 'next-prompt';
+  prompt.id = 'prompt-' + panelId;
+  prompt.innerHTML = `
+    <span class="next-prompt-text">Ready to continue? The next required table is <strong>Placing the Displaced</strong>.</span>
+    <button class="btn-continue" onclick="continueToObstacles()">Continue →</button>
+  `;
+  panel.appendChild(prompt);
+}
+
+function showNextPromptAfterConditional(lastPanelId, nextTableId) {
+  showNextPromptAfterPanel(lastPanelId, nextTableId);
+}
+
+function continueToObstacles() {
+  unlockPanel('placing');
+  enableBtn('btn-placing');
+  document.getElementById('panel-placing').scrollIntoView({behavior:'smooth', block:'nearest'});
+  // Remove all continue prompts
+  document.querySelectorAll('.next-prompt').forEach(e => e.remove());
+}
+
+// ─── SUMMARY ─────────────────────────────────────────────────────────────────
+
+function updateSummary() {
+  const container = document.getElementById('summaryItems');
+  container.innerHTML = '';
+  const order = ['displaced','intel','universe','past-when','past-diverge','future','present-scale','personal','memory','divergent','placing','obstacles'];
+  order.forEach(id => {
+    if (state.rolls[id]) {
+      const { roll, result } = state.rolls[id];
+      const item = document.createElement('div');
+      item.className = 'summary-item';
+      item.innerHTML = `
+        <span class="summary-key">${TABLE_NAMES[id]}</span>
+        <span class="summary-val">${result.text}</span>
+      `;
+      container.appendChild(item);
+    }
+  });
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+
+function resetAll() {
+  // Clear all results
+  document.querySelectorAll('.result-box').forEach(el => {
+    el.classList.remove('visible');
+    el.innerHTML = '';
+  });
+  // Reset die numbers
+  document.querySelectorAll('[id^="die-"][id$="-num"]').forEach(el => { el.textContent = '—'; });
+  // Hide conditional panels
+  ['panel-past-when','panel-past-diverge','panel-future','panel-present-scale','panel-personal','panel-memory','panel-divergent'].forEach(id => {
+    const p = document.getElementById(id);
+    if (p) p.style.display = 'none';
+  });
+  // Remove active states
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  // Disable buttons (except displaced, optional tables)
+  ['btn-intel','btn-universe','btn-placing','btn-obstacles'].forEach(id => {
+    const btn = document.getElementById(id);
+    if (btn) btn.disabled = true;
+  });
+  // Remove next prompts
+  document.querySelectorAll('.next-prompt').forEach(e => e.remove());
+  // Hide summary
+  document.getElementById('summaryPanel').classList.remove('visible');
+  document.getElementById('summaryItems').innerHTML = '';
+  // Reset state
+  state.rolls = {};
+  // Re-activate first panel
+  document.getElementById('panel-displaced').classList.add('active');
+  // Scroll top
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+</script>
+</body>
+</html>
